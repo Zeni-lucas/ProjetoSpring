@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "funcionarios")
 public class FuncionarioEntity {
     @Id

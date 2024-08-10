@@ -33,7 +33,13 @@ public class ProdutoService {
         List<ProdutoEntity> lista = this.produtoRepository.findAll();
         return lista;
     }
+
     public ProdutoEntity findById(long id){
         return this.produtoRepository.findById(id).get();
     }
+
+    public List<ProdutoEntity> listarTop10(){
+        return this.produtoRepository.findTop10ByOrderByPrecoDesc();
+    }
+
 }

@@ -17,7 +17,7 @@ public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
 
-    @PostMapping("/save")
+    @PostMapping("/save-endereco")
     public ResponseEntity<String> save(@RequestBody EnderecoEntity enderecoEntity){
         try{
             String msg = this.enderecoService.save(enderecoEntity);

@@ -48,4 +48,16 @@ public class VendaService {
         return this.vendaRepository.findById(id).get();
     }
 
+    public List<VendaEntity> listarVendasNomeCliente(String nomeCliente){
+        return this.vendaRepository.findByClienteNomeContaining(nomeCliente);
+    }
+
+    public List<VendaEntity> listarVendasFuncionario(String nomeFuncionario){
+        return this.listarVendasFuncionario(nomeFuncionario);
+    }
+
+    public List<VendaEntity> listarVendasMaisAltas(){
+        return this.vendaRepository.findTop10ByOrderByTotalVendaDesc();
+    }
+
 }

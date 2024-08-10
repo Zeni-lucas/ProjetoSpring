@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/venda")
 public class VendaController {
 
     @Autowired
@@ -59,6 +61,36 @@ public class VendaController {
             return new ResponseEntity<>(vendaEntity, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/compras-cliente")
+    public ResponseEntity<List<VendaEntity>> ListarVendasNomeCliente(@RequestParam String nomeCliente){
+        try{
+            List<VendaEntity> lista = this.vendaService.listarVendasNomeCliente(nomeCliente);
+            return new ResponseEntity<>(lista,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/vendas-funcionario")
+    public ResponseEntity<List<VendaEntity>> listarVendasNomeFuncionario(@RequestParam String nomeFuncionario){
+        try {
+            List<VendaEntity> lista = this.vendaService.listarVendasFuncionario(nomeFuncionario);
+            return new ResponseEntity<>(lista,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/vendas-top10")
+    public ResponseEntity<List<VendaEntity>> listarVendasMaisAltas(){
+        try {
+            List<VendaEntity> lista = this.vendaService.listarVendasMaisAltas();
+            return new ResponseEntity<>(lista,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
 }

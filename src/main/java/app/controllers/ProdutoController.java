@@ -10,7 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RestController
+@RequestMapping("/api/produto")
 public class ProdutoController {
 
     @Autowired
@@ -61,4 +62,14 @@ public class ProdutoController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/top10")
+    public ResponseEntity<List<ProdutoEntity>> listarTop10(){
+        try{
+            List<ProdutoEntity> lista = this.produtoService.listarTop10();
+            return new ResponseEntity<>(lista,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

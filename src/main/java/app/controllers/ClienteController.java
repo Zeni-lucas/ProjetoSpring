@@ -1,7 +1,9 @@
 package app.controllers;
 
 import app.entities.ClienteEntity;
+import app.entities.EnderecoEntity;
 import app.services.ClienteService;
+import app.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +17,17 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+    @Autowired
+    private EnderecoService enderecoService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> save(@RequestBody ClienteEntity clienteEntity){
-        try{
-            String msg = this.clienteService.save(clienteEntity);
-            return new ResponseEntity<>(msg,HttpStatus.OK);
-        }catch (Exception e){
+    public ResponseEntity<String> save(@RequestBody ClienteEntity clienteEntity) {
+        try {
+            EnderecoEntity endereco = clienteEntity.getEndereco();
+            this.enderecoService.save(endereco);
+            clienteService.save(clienteEntity);
+            return new ResponseEntity<>("Cliente e endereço salvos com sucesso", HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -57,6 +63,15 @@ public class ClienteController {
         try{
             ClienteEntity clienteEntity = this.clienteService.findById(id);
             return new ResponseEntity<>(clienteEntity, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/idade")
+    public ResponseEntity<List<ClienteEntity>> listarClientesPorIdade(@RequestParam int idadeInicio, @RequestParam int idadeFim){
+        try{
+            List<ClienteEntity> lista = this.clienteService.listarClientesPorIdade(idadeInicio, idadeFim);
+            return new ResponseEntity<>(lista, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
